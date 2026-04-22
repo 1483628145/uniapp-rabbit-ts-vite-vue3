@@ -13,7 +13,7 @@
       "@dcloudio/types",
       "miniprogram-api-typings",
       "@uni-helper/uni-app-types",
-      "@uni-helper/uni-ui-types"
+      "@uni-helper/uni-ui-types" // uniapp 类型声明
     ]
   },
   "vueCompilerOptions": {

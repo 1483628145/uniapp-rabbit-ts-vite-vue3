@@ -97,11 +97,11 @@ importers:
         specifier: ^18.11.9
         version: 18.11.10
       '@uni-helper/uni-app-types':
-        specifier: 1.0.0-alpha.6
-        version: 1.0.0-alpha.6(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6))
+        specifier: 1.0.0-alpha.8
+        version: 1.0.0-alpha.8(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6))
       '@uni-helper/uni-ui-types':
-        specifier: 1.0.0-alpha.6
-        version: 1.0.0-alpha.6(@uni-helper/uni-app-types@1.0.0-alpha.6(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6)))(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6))
+        specifier: 1.0.0-alpha.8
+        version: 1.0.0-alpha.8(@uni-helper/uni-app-types@1.0.0-alpha.8(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6)))(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6))
       '@vue/eslint-config-prettier':
         specifier: ^7.0.0
         version: 7.0.0(eslint@8.28.0)(prettier@2.8.0)
@@ -1983,18 +1983,18 @@ packages:
     resolution: {integrity: sha512-jc6Eccbn2RtQPr1s7th6jJWQHBHI6GBVQkCHoJFQ5UreaKm59Vxw+ynQUPPY2u2Amquc+7tmEoC2G52ApsGNNg==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@uni-helper/uni-app-types@1.0.0-alpha.6':
-    resolution: {integrity: sha512-t9AKDYBmDaz4IW0fgtBt25ubEzf7kyUeMlHaBaG5nyNGd6pVuDpYkABhsnNPDiZcaHAoN6SbX1SQQx5axDOWbA==}
+  '@uni-helper/uni-app-types@1.0.0-alpha.8':
+    resolution: {integrity: sha512-XBMF/QfRyW+ObT9J3Wsy+Za5y2ArNdxssuaqiVm5ty/JSfDwwT6IVqiQbDfe7hFM5NLYgHmjdsRqISgr2MOaXw==}
     engines: {node: '>=14.18'}
     peerDependencies:
       typescript: ^5.0.0
       vue: ^3.0.0
 
-  '@uni-helper/uni-ui-types@1.0.0-alpha.6':
-    resolution: {integrity: sha512-2KuAup2M7rPVzpLaXhhnxCD/Cs5VQYiqzC9XNI/VZuA88+ApPmHzkwyS0THSHnz1VbDIGX/Ju69nj+mApfYKDw==}
+  '@uni-helper/uni-ui-types@1.0.0-alpha.8':
+    resolution: {integrity: sha512-4c+a2teOneJH+h3t3OWBskSlXY2gqwZge5F/c7pY5ixyxSft3s4eIE/yqLhhqsJRUDq1EH5z6iEl1XbYwy/yDA==}
     engines: {node: '>=14.18'}
     peerDependencies:
-      '@uni-helper/uni-app-types': 1.0.0-alpha.6
+      '@uni-helper/uni-app-types': 1.0.0-alpha.8
       typescript: ^5.0.0
       vue: ^3.0.0
 
@@ -6932,7 +6932,7 @@ snapshots:
       chalk: 4.1.2
       emittery: 0.8.1
       exit: 0.1.2
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       jest-changed-files: 27.5.1
       jest-config: 27.5.1
       jest-haste-map: 27.5.1
@@ -6991,7 +6991,7 @@ snapshots:
       collect-v8-coverage: 1.0.1
       exit: 0.1.2
       glob: 7.2.3
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       istanbul-lib-coverage: 3.2.0
       istanbul-lib-instrument: 5.2.1
       istanbul-lib-report: 3.0.0
@@ -7012,7 +7012,7 @@ snapshots:
   '@jest/source-map@27.5.1':
     dependencies:
       callsites: 3.1.0
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       source-map: 0.6.1
 
   '@jest/test-result@27.5.1':
@@ -7025,7 +7025,7 @@ snapshots:
   '@jest/test-sequencer@27.5.1':
     dependencies:
       '@jest/test-result': 27.5.1
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       jest-haste-map: 27.5.1
       jest-runtime: 27.5.1
     transitivePeerDependencies:
@@ -7039,7 +7039,7 @@ snapshots:
       chalk: 4.1.2
       convert-source-map: 1.9.0
       fast-json-stable-stringify: 2.1.0
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       jest-haste-map: 27.5.1
       jest-regex-util: 27.5.1
       jest-util: 27.5.1
@@ -7634,14 +7634,14 @@ snapshots:
       '@typescript-eslint/types': 5.45.0
       eslint-visitor-keys: 3.3.0
 
-  '@uni-helper/uni-app-types@1.0.0-alpha.6(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6))':
+  '@uni-helper/uni-app-types@1.0.0-alpha.8(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6))':
     dependencies:
       typescript: 5.1.6
       vue: 3.5.20(typescript@5.1.6)
 
-  '@uni-helper/uni-ui-types@1.0.0-alpha.6(@uni-helper/uni-app-types@1.0.0-alpha.6(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6)))(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6))':
+  '@uni-helper/uni-ui-types@1.0.0-alpha.8(@uni-helper/uni-app-types@1.0.0-alpha.8(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6)))(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6))':
     dependencies:
-      '@uni-helper/uni-app-types': 1.0.0-alpha.6(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6))
+      '@uni-helper/uni-app-types': 1.0.0-alpha.8(typescript@5.1.6)(vue@3.5.20(typescript@5.1.6))
       typescript: 5.1.6
       vue: 3.5.20(typescript@5.1.6)
 
@@ -8146,7 +8146,7 @@ snapshots:
       babel-plugin-istanbul: 6.1.1
       babel-preset-jest: 27.5.1(@babel/core@7.28.3)
       chalk: 4.1.2
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       slash: 3.0.0
     transitivePeerDependencies:
       - supports-color
@@ -9277,7 +9277,7 @@ snapshots:
       '@jest/types': 27.5.1
       chalk: 4.1.2
       exit: 0.1.2
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       import-local: 3.1.0
       jest-config: 27.5.1
       jest-util: 27.5.1
@@ -9301,7 +9301,7 @@ snapshots:
       ci-info: 3.8.0
       deepmerge: 4.3.1
       glob: 7.2.3
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       jest-circus: 27.5.1
       jest-environment-jsdom: 27.5.1
       jest-environment-node: 27.5.1
@@ -9375,7 +9375,7 @@ snapshots:
       '@types/node': 18.11.10
       anymatch: 3.1.3
       fb-watchman: 2.0.2
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       jest-regex-util: 27.5.1
       jest-serializer: 27.5.1
       jest-util: 27.5.1
@@ -9425,7 +9425,7 @@ snapshots:
       '@jest/types': 27.5.1
       '@types/stack-utils': 2.0.1
       chalk: 4.1.2
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       micromatch: 4.0.8
       pretty-format: 27.5.1
       slash: 3.0.0
@@ -9454,7 +9454,7 @@ snapshots:
     dependencies:
       '@jest/types': 27.5.1
       chalk: 4.1.2
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       jest-haste-map: 27.5.1
       jest-pnp-resolver: 1.2.3(jest-resolve@27.5.1)
       jest-util: 27.5.1
@@ -9473,7 +9473,7 @@ snapshots:
       '@types/node': 18.11.10
       chalk: 4.1.2
       emittery: 0.8.1
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       jest-docblock: 27.5.1
       jest-environment-jsdom: 27.5.1
       jest-environment-node: 27.5.1
@@ -9506,7 +9506,7 @@ snapshots:
       collect-v8-coverage: 1.0.1
       execa: 5.1.1
       glob: 7.2.3
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       jest-haste-map: 27.5.1
       jest-message-util: 27.5.1
       jest-mock: 27.5.1
@@ -9522,7 +9522,7 @@ snapshots:
   jest-serializer@27.5.1:
     dependencies:
       '@types/node': 18.11.10
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
 
   jest-snapshot@27.5.1:
     dependencies:
@@ -9538,7 +9538,7 @@ snapshots:
       babel-preset-current-node-syntax: 1.0.1(@babel/core@7.28.3)
       chalk: 4.1.2
       expect: 27.5.1
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       jest-diff: 27.5.1
       jest-get-type: 27.5.1
       jest-haste-map: 27.5.1
@@ -9557,7 +9557,7 @@ snapshots:
       '@types/node': 18.11.10
       chalk: 4.1.2
       ci-info: 3.8.0
-      graceful-fs: 4.2.10
+      graceful-fs: 4.2.11
       picomatch: 2.3.1
 
   jest-validate@27.5.1:
@@ -9626,7 +9626,7 @@ snapshots:
   jsdom@16.7.0:
     dependencies:
       abab: 2.0.6
-      acorn: 8.15.0
+      acorn: 8.16.0
       acorn-globals: 6.0.0
       cssom: 0.4.4
       cssstyle: 2.3.0
