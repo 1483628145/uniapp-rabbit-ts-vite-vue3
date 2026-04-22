@@ -38,7 +38,7 @@
     "navigationBarBackgroundColor": "#F8F8F8",
     "backgroundColor": "#F8F8F8"
   },
-  // 设置 TabBar
+  // 设置 TabBar css样式
   "tabBar": {
     "color": "#333",
     "selectedColor": "#27ba9b",
@@ -70,5 +70,13 @@
         "selectedIconPath": "static/tabs/user_selected.png"
       }
     ]
+  },
+  // 组件自动导入配置
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      // uni-ui 规则如下配置
+      "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue"
+    }
   }
 }

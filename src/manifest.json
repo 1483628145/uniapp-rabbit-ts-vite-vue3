@@ -1,5 +1,6 @@
 {
   "name": "小兔鲜儿",
+  // 应用ID 用于部署DAPP
   "appid": "",
   "description": "",
   "versionName": "1.0.0",

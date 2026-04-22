@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { onLaunch, onShow, onHide } from '@dcloudio/uni-app'
 
+/*
+uniapp 生命周期
+*/
+
 onLaunch(() => {
   console.log('App Launch')
 })

@@ -3,11 +3,12 @@
   "compilerOptions": {
     "allowJs": true,
     "sourceMap": true,
-    "baseUrl": ".",
+    // "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
     "lib": ["esnext", "dom"],
+    // 引入 uni-app 类型定义
     "types": [
       "@dcloudio/types",
       "miniprogram-api-typings",
