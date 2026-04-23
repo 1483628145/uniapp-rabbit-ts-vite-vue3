@@ -1,44 +1,32 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
+// 轮播图激活下标
 const activeIndex = ref(0)
+
+// 轮播图切换事件 拿到当前下标然后给 activeIndex
+// UniHelper.SwiperOnChange 轮播图切换事件类型
+const handleChange: UniHelper.SwiperOnChange = (e) => {
+  // e.detail.current 当前轮播图下标
+  activeIndex.value = e.detail.current
+}
+
+defineProps(['bannerList'])
 </script>
 
 <template>
   <view class="carousel">
-    <swiper :circular="true" :autoplay="false" :interval="3000">
-      <swiper-item>
+    <swiper :circular="true" :autoplay="false" :interval="3000" @change="handleChange">
+      <swiper-item v-for="item in bannerList" :key="item.id">
         <navigator url="/pages/index/index" hover-class="none" class="navigator">
-          <image
-            mode="aspectFill"
-            class="image"
-            src="https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/slider_1.jpg"
-          ></image>
-        </navigator>
-      </swiper-item>
-      <swiper-item>
-        <navigator url="/pages/index/index" hover-class="none" class="navigator">
-          <image
-            mode="aspectFill"
-            class="image"
-            src="https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/slider_2.jpg"
-          ></image>
-        </navigator>
-      </swiper-item>
-      <swiper-item>
-        <navigator url="/pages/index/index" hover-class="none" class="navigator">
-          <image
-            mode="aspectFill"
-            class="image"
-            src="https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/slider_3.jpg"
-          ></image>
+          <image mode="aspectFill" class="image" :src="item.imgUrl"></image>
         </navigator>
       </swiper-item>
     </swiper>
     <!-- 指示点 -->
     <view class="indicator">
       <text
-        v-for="(item, index) in 3"
+        v-for="(item, index) in bannerList"
         :key="item"
         class="dot"
         :class="{ active: index === activeIndex }"
