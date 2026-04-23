@@ -42,16 +42,30 @@ onLoad(async () => {
 // 触底加载更多数据
 const handleScrollToLower = () => {
   // 触发子组件 获取更多数据
-  console.log('触底加载更多数据')
   guessRef.value?.reqGuessList()
 }
 
 // 猜你喜欢 子组件实例
 const guessRef = ref<XtxGuessInstance>()
 
+// 下拉刷新状态
+const isTriggered = ref(false)
+
 // 下拉刷新
-const handleRefresh = () => {
-  console.log('xia')
+const handleRefresh = async () => {
+  isTriggered.value = true
+
+  // 重新发请求获取数据
+  guessRef.value?.resetGuessList()
+  // 使用 Promise.all 并行请求多个接口
+  await Promise.all([
+    getCategoryList(),
+    getHotList(),
+    getHomeBanner(),
+    guessRef.value?.reqGuessList(),
+  ]).then(() => {
+    isTriggered.value = false
+  })
 }
 </script>
 
@@ -59,10 +73,10 @@ const handleRefresh = () => {
   <!-- 导航条 -->
   <customNavbar></customNavbar>
   <scroll-view
-    refresherrefresh="handleRefresh"
+    @refresherrefresh="handleRefresh"
     refresher-enabled
+    :refresher-triggered="isTriggered"
     scroll-y
-    refresher
     @scrolltolower="handleScrollToLower"
     class="scroll-view"
   >

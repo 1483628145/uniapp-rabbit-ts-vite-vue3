@@ -45,12 +45,20 @@ const reqGuessList = async () => {
   }
 }
 
+// 重置猜你喜欢列表
+const resetGuessList = () => {
+  guessList.value = []
+  getListParams.page = 1
+  finished.value = false
+}
+
 onLoad(() => {
   reqGuessList()
 })
 
 defineExpose({
   reqGuessList,
+  resetGuessList,
 })
 </script>
 
