@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { onLoad } from '@dcloudio/uni-app'
+import { onMounted, ref } from 'vue'
 import { getGuessList } from '@/api/home/home'
 import type { brandItem, guessParams } from '@/api/home/types'
 
@@ -52,7 +51,7 @@ const resetGuessList = () => {
   finished.value = false
 }
 
-onLoad(() => {
+onMounted(() => {
   reqGuessList()
 })
 
