@@ -1,5 +1,18 @@
 <script setup lang="ts">
-//
+import { ref } from 'vue'
+import type { guessItem } from '@/api/home/types'
+import { getGuessList } from '@/api/home/home'
+import { onLoad } from '@dcloudio/uni-app'
+
+// 猜你喜欢列表
+const guessList = ref<guessItem[]>([])
+
+onLoad(async () => {
+  const res = await getGuessList({ page: 1, pageSize: 10 })
+  guessList.value = res.result
+
+  console.log(guessList.value)
+})
 </script>
 
 <template>

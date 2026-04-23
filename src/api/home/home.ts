@@ -3,6 +3,8 @@ import { http } from '../../utils/http'
 import type { HomeBannerItem } from './types'
 import type { categoryItem } from './types'
 import type { hotItem } from './types'
+import type { guessItem } from './types'
+import type { guessParams } from './types'
 
 /**
  * 首页-广告区域-小程序
@@ -37,5 +39,17 @@ export const getHotList = () => {
   return http<hotItem[]>({
     url: '/home/hot/mutli',
     method: 'GET',
+  })
+}
+
+/**
+ * 首页-猜你喜欢
+ * @query page 页码 默认是1 pageSize每页条数 默认是10
+ */
+export const getGuessList = (data: guessParams) => {
+  return http<guessItem[]>({
+    url: '/home/goods/guessLike',
+    method: 'GET',
+    data,
   })
 }

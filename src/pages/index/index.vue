@@ -37,8 +37,6 @@ onLoad(async () => {
   const res = await getHotList()
   hotList.value = res.result
 })
-
-console.log(hotList.value)
 </script>
 
 <template>
@@ -50,6 +48,8 @@ console.log(hotList.value)
   <CategoryPanel :categoryList="categoryList"></CategoryPanel>
   <!-- 推荐专区 -->
   <HotPanel :hotList="hotList"></HotPanel>
+  <!-- 猜你喜欢 子组件获取数据 -->
+  <XtxGuess></XtxGuess>
 </template>
 
 <style lang="scss">
