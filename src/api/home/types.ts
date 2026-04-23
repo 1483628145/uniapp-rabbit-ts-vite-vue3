@@ -11,3 +11,12 @@ export interface categoryItem {
   name: string
   icon: string
 }
+
+export interface hotItem {
+  id: string
+  alt: string
+  pictures: string[]
+  target: string
+  title: string
+  type: string
+}

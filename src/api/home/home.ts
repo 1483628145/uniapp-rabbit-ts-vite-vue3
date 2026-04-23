@@ -2,6 +2,7 @@
 import { http } from '../../utils/http'
 import type { HomeBannerItem } from './types'
 import type { categoryItem } from './types'
+import type { hotItem } from './types'
 
 /**
  * 首页-广告区域-小程序
@@ -24,6 +25,17 @@ export const getHomeBanner = (distributionSite = 1) => {
 export const getCategoryList = () => {
   return http<categoryItem[]>({
     url: '/home/category/mutli',
+    method: 'GET',
+  })
+}
+
+/**
+ * 首页-热门推荐
+ * @returns 热门推荐
+ */
+export const getHotList = () => {
+  return http<hotItem[]>({
+    url: '/home/hot/mutli',
     method: 'GET',
   })
 }
