@@ -1,52 +1,90 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { guessItem } from '@/api/home/types'
-import { getGuessList } from '@/api/home/home'
 import { onLoad } from '@dcloudio/uni-app'
+import { getGuessList } from '@/api/home/home'
+import type { brandItem, guessParams } from '@/api/home/types'
 
 // 猜你喜欢列表
-const guessList = ref<guessItem[]>([])
+const guessList = ref<brandItem[]>([])
+// 是否正在加载，避免重复触发触底时并发请求
+const loading = ref(false)
+// 是否已经加载完全部数据
+const finished = ref(false)
 
-onLoad(async () => {
-  const res = await getGuessList({ page: 1, pageSize: 10 })
-  guessList.value = res.result
+// 分页参数
+const getListParams: Required<guessParams> = {
+  page: 1,
+  pageSize: 10,
+}
 
-  console.log(guessList.value)
+// 获取猜你喜欢列表
+const reqGuessList = async () => {
+  // 已经在请求中，或者已经没有更多数据时，直接拦截
+  if (loading.value || finished.value) return
+
+  loading.value = true
+
+  try {
+    const res = await getGuessList(getListParams)
+
+    guessList.value.push(...res.result.items)
+
+    // 当前页已经到最后一页，标记结束，后续不再发请求
+    if (getListParams.page >= res.result.pages) {
+      finished.value = true
+      uni.showToast({
+        title: '没有更多数据了',
+        icon: 'none',
+      })
+      return
+    }
+
+    getListParams.page++
+  } finally {
+    loading.value = false
+  }
+}
+
+onLoad(() => {
+  reqGuessList()
+})
+
+defineExpose({
+  reqGuessList,
 })
 </script>
 
 <template>
-  <!-- 猜你喜欢 -->
   <view class="caption">
     <text class="text">猜你喜欢</text>
   </view>
+
   <view class="guess">
     <navigator
+      v-for="item in guessList"
+      :key="item.id"
       class="guess-item"
-      v-for="item in 10"
-      :key="item"
       :url="`/pages/goods/goods?id=4007498`"
     >
-      <image
-        class="image"
-        mode="aspectFill"
-        src="https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/goods_big_1.jpg"
-      ></image>
-      <view class="name"> 德国THORE男表 超薄手表男士休闲简约夜光石英防水直径40毫米 </view>
+      <image class="image" mode="aspectFill" :src="item.picture"></image>
+      <view class="name">{{ item.name }}</view>
       <view class="price">
         <text class="small">¥</text>
-        <text>899.00</text>
+        <text>{{ item.price }}</text>
       </view>
     </navigator>
   </view>
-  <view class="loading-text"> 正在加载... </view>
+
+  <view class="loading-text">
+    {{ finished ? '没有更多数据了' : loading ? '正在加载...' : '上拉加载更多' }}
+  </view>
 </template>
 
 <style lang="scss">
 :host {
   display: block;
 }
-/* 分类标题 */
+
 .caption {
   display: flex;
   justify-content: center;
@@ -54,6 +92,7 @@ onLoad(async () => {
   padding: 36rpx 0 40rpx;
   font-size: 32rpx;
   color: #262626;
+
   .text {
     display: flex;
     justify-content: center;
@@ -65,57 +104,61 @@ onLoad(async () => {
       content: '';
       width: 20rpx;
       height: 20rpx;
+      margin: 0 10rpx;
       background-image: url(@/static/images/bubble.png);
       background-size: contain;
-      margin: 0 10rpx;
     }
   }
 }
 
-/* 猜你喜欢 */
 .guess {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   padding: 0 20rpx;
+
   .guess-item {
     width: 345rpx;
     padding: 24rpx 20rpx 20rpx;
     margin-bottom: 20rpx;
-    border-radius: 10rpx;
     overflow: hidden;
+    border-radius: 10rpx;
     background-color: #fff;
   }
+
   .image {
     width: 304rpx;
     height: 304rpx;
   }
+
   .name {
+    display: -webkit-box;
     height: 75rpx;
     margin: 10rpx 0;
+    overflow: hidden;
     font-size: 26rpx;
     color: #262626;
-    overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
+
   .price {
     line-height: 1;
     padding-top: 4rpx;
-    color: #cf4444;
     font-size: 26rpx;
+    color: #cf4444;
   }
+
   .small {
     font-size: 80%;
   }
 }
-// 加载提示文字
+
 .loading-text {
-  text-align: center;
+  padding: 20rpx 0;
   font-size: 28rpx;
   color: #666;
-  padding: 20rpx 0;
+  text-align: center;
 }
 </style>

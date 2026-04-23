@@ -35,7 +35,7 @@ export interface brandItem {
 }
 
 //  首页-猜你喜欢接口响应参数
-export interface guessItem {
+export interface guessResponse {
   counts: number
   pageSize: number
   pages: number
@@ -45,6 +45,6 @@ export interface guessItem {
 
 // 首页 - 猜你喜欢请求接口参数
 export interface guessParams {
-  page: number
-  pageSize: number
+  page?: number
+  pageSize?: number
 }

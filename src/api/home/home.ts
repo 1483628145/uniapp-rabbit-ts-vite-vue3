@@ -3,7 +3,7 @@ import { http } from '../../utils/http'
 import type { HomeBannerItem } from './types'
 import type { categoryItem } from './types'
 import type { hotItem } from './types'
-import type { guessItem } from './types'
+import type { guessResponse } from './types'
 import type { guessParams } from './types'
 
 /**
@@ -46,8 +46,8 @@ export const getHotList = () => {
  * 首页-猜你喜欢
  * @query page 页码 默认是1 pageSize每页条数 默认是10
  */
-export const getGuessList = (data: guessParams) => {
-  return http<guessItem[]>({
+export const getGuessList = (data?: guessParams) => {
+  return http<guessResponse>({
     url: '/home/goods/guessLike',
     method: 'GET',
     data,

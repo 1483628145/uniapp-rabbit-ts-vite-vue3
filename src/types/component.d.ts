@@ -5,9 +5,12 @@
  */
 import 'vue'
 import XtxSwiper from './XtxSwiper.vue'
+import type XtxGuess from '@/components/XtxGuess.vue'
 declare module 'vue' {
   export interface GlobalComponents {
     //
     XtxSwiper: typeof XtxSwiper
   }
 }
+
+export type XtxGuessInstance = InstanceType<typeof XtxGuess>

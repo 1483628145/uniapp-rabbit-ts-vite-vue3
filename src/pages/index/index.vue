@@ -10,6 +10,7 @@ import { getCategoryList } from '@/api/home/home'
 import HotPanel from './components/HotPanel.vue'
 import type { hotItem } from '@/api/home/types'
 import { getHotList } from '@/api/home/home'
+import type { XtxGuessInstance } from '@/types/component.d'
 
 // 轮播图数据 类型为HomeBannerItem
 const bannerList = ref<HomeBannerItem[]>([])
@@ -37,24 +38,52 @@ onLoad(async () => {
   const res = await getHotList()
   hotList.value = res.result
 })
+
+// 触底加载更多数据
+const handleScrollToLower = () => {
+  // 触发子组件 获取更多数据
+  console.log('触底加载更多数据')
+  guessRef.value?.reqGuessList()
+}
+
+// 猜你喜欢 子组件实例
+const guessRef = ref<XtxGuessInstance>()
+
+// 下拉刷新
+const handleRefresh = () => {
+  console.log('xia')
+}
 </script>
 
 <template>
   <!-- 导航条 -->
   <customNavbar></customNavbar>
-  <!-- 轮播图 -->
-  <XtxSwiper :bannerList="bannerList"></XtxSwiper>
-  <!-- 分类面板 -->
-  <CategoryPanel :categoryList="categoryList"></CategoryPanel>
-  <!-- 推荐专区 -->
-  <HotPanel :hotList="hotList"></HotPanel>
-  <!-- 猜你喜欢 子组件获取数据 -->
-  <XtxGuess></XtxGuess>
+  <scroll-view
+    refresherrefresh="handleRefresh"
+    refresher-enabled
+    scroll-y
+    refresher
+    @scrolltolower="handleScrollToLower"
+    class="scroll-view"
+  >
+    <!-- 轮播图 -->
+    <XtxSwiper :bannerList="bannerList"></XtxSwiper>
+    <!-- 分类面板 -->
+    <CategoryPanel :categoryList="categoryList"></CategoryPanel>
+    <!-- 推荐专区 -->
+    <HotPanel :hotList="hotList"></HotPanel>
+    <!-- 猜你喜欢 子组件获取数据 -->
+    <XtxGuess ref="guessRef"></XtxGuess>
+  </scroll-view>
 </template>
 
 <style lang="scss">
 // 页面背景颜色
 page {
   background-color: #f7f7f7;
+}
+
+.scroll-view {
+  height: 100vh;
 }
 </style>
