@@ -4,6 +4,8 @@ import { ref } from 'vue'
 import { getGoodsList } from '@/api/goods/goods'
 import { onLoad } from '@dcloudio/uni-app'
 import type { GoodsResult } from '@/api/goods/types'
+import AddressPanel from './components/AddressPanel.vue'
+import ServicePanel from './components/ServicePanel.vue'
 
 // 商品详情数据
 // 获取屏幕边界到安全区域距离
@@ -28,6 +30,20 @@ const currentIndex = ref(0)
 
 const onSwiperChange = (e: any) => {
   currentIndex.value = e.detail.current
+}
+
+/*
+弹出层交互
+*/
+// 弹出层名称
+const popupName = ref('')
+
+const popup = ref()
+
+// 弹出层实例
+const openpopup = (name: string) => {
+  popupName.value = name
+  popup.value.open()
 }
 
 // 监听页面加载
@@ -71,15 +87,21 @@ onLoad(() => {
           <text class="label">选择</text>
           <text class="text ellipsis"> 请选择商品规格 </text>
         </view>
-        <view class="item arrow">
+        <view class="item arrow" @tap="openpopup('address')">
           <text class="label">送至</text>
           <text class="text ellipsis"> 请选择收获地址 </text>
         </view>
-        <view class="item arrow">
+        <view class="item arrow" @tap="openpopup('service')">
           <text class="label">服务</text>
           <text class="text ellipsis"> 无忧退 快速退款 免费包邮 </text>
         </view>
       </view>
+
+      <!-- 弹出层 -->
+      <uni-popup ref="popup" type="bottom" background-color="#fff">
+        <AddressPanel v-if="popupName === 'address'" @close="popup.close()" />
+        <ServicePanel v-if="popupName === 'service'" @close="popup.close()" />
+      </uni-popup>
     </view>
 
     <!-- 商品详情 -->
