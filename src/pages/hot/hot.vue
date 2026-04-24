@@ -30,13 +30,33 @@ uni.setNavigationBarTitle({
 const hotData = ref<hotResponse>({} as hotResponse)
 
 // 推荐参数
-const hotParams = ref({ subType: '1', pageSize: '10', page: '1' })
+const hotParams = ref({ pageSize: 10, page: 30 })
+
+// 高亮下标
+const showSubItem = ref(0)
 
 // 获取推荐数据
 const getHotData = async () => {
   const res = await getHot(query!.url)
   hotData.value = res.result
-  console.log(hotData.value)
+}
+// 切换推荐选项
+const changeSubItem = (index: number) => {
+  showSubItem.value = index
+}
+
+// 到达底部加载更多数据
+const handleScrollToLower = async () => {
+  // 发请求 把数据push过去
+  hotParams.value.page++
+  const res = await getHot(query!.url, {
+    subType: hotData.value.subTypes[showSubItem.value].id,
+    ...hotParams.value,
+  })
+  // push进去
+  hotData.value.subTypes[showSubItem.value].goodsItems.items.push(
+    ...res.result.subTypes[showSubItem.value].goodsItems.items,
+  )
 }
 
 // 获取数据
@@ -53,27 +73,30 @@ onLoad(() => {
     </view>
     <!-- 推荐选项 -->
     <view class="tabs">
-      <text class="text active">抢先尝鲜</text>
-      <text class="text">新品预告</text>
+      <text
+        class="text"
+        :class="{ active: index === showSubItem }"
+        v-for="(subItem, index) in hotData.subTypes"
+        :key="subItem.id"
+        @tap="changeSubItem(index)"
+        >{{ subItem.title }}</text
+      >
     </view>
     <!-- 推荐列表 -->
-    <scroll-view scroll-y class="scroll-view">
+    <scroll-view scroll-y class="scroll-view" @scrolltolower="handleScrollToLower">
       <view class="goods">
         <navigator
           hover-class="none"
           class="navigator"
-          v-for="goods in 10"
-          :key="goods"
+          v-for="goods in hotData.subTypes[showSubItem].goodsItems.items"
+          :key="goods.id"
           :url="`/pages/goods/goods?id=`"
         >
-          <image
-            class="thumb"
-            src="https://yanxuan-item.nosdn.127.net/5e7864647286c7447eeee7f0025f8c11.png"
-          ></image>
-          <view class="name ellipsis">不含酒精，使用安心爽肤清洁湿巾</view>
+          <image class="thumb" :src="goods.picture"></image>
+          <view class="name ellipsis">{{ goods.name }}</view>
           <view class="price">
             <text class="symbol">¥</text>
-            <text class="number">29.90</text>
+            <text class="number">{{ goods.price }}</text>
           </view>
         </navigator>
       </view>
