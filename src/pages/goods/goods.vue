@@ -3,6 +3,9 @@
 import { ref } from 'vue'
 import { getGoodsList } from '@/api/goods/goods'
 import { onLoad } from '@dcloudio/uni-app'
+import type { GoodsResult } from '@/api/goods/types'
+
+// 商品详情数据
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 
@@ -10,13 +13,21 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
 const { id } = defineProps<{ id: string }>()
 
 // 商品详情
-const goodsDetail: any = ref({})
+const goodsDetail = ref<GoodsResult>({} as GoodsResult)
 
 // 获取商品详情数据
 const getGoodsData = async () => {
   const res = await getGoodsList(id)
   goodsDetail.value = res.result
-  console.log(goodsDetail.value)
+}
+
+/*
+轮播图交互
+*/
+const currentIndex = ref(0)
+
+const onSwiperChange = (e: any) => {
+  currentIndex.value = e.detail.current
 }
 
 // 监听页面加载
@@ -31,15 +42,16 @@ onLoad(() => {
     <view class="goods">
       <!-- 商品主图 -->
       <view class="preview">
-        <swiper circular>
+        <!-- 当轮播图改变时将索引拿到 -->
+        <swiper circular @change="onSwiperChange">
           <swiper-item v-for="(mainPic, index) in goodsDetail.mainPictures" :key="index">
             <image mode="aspectFill" :src="mainPic" />
           </swiper-item>
         </swiper>
         <view class="indicator">
-          <text class="current">1</text>
+          <text class="current">{{ currentIndex + 1 }}</text>
           <text class="split">/</text>
-          <text class="total">5</text>
+          <text class="total">{{ goodsDetail.mainPictures.length }}</text>
         </view>
       </view>
 
@@ -78,23 +90,21 @@ onLoad(() => {
       <view class="content">
         <view class="properties">
           <!-- 属性详情 -->
-          <view class="item">
-            <text class="label">属性名</text>
-            <text class="value">属性值</text>
-          </view>
-          <view class="item">
-            <text class="label">属性名</text>
-            <text class="value">属性值</text>
+          <view
+            class="item"
+            v-for="(goodsDeta, index) in goodsDetail.details.properties"
+            :key="index"
+          >
+            <text class="label">{{ goodsDeta.name }}</text>
+            <text class="value">{{ goodsDeta.value }}</text>
           </view>
         </view>
         <!-- 图片详情 -->
         <image
           mode="widthFix"
-          src="https://yanxuan-item.nosdn.127.net/a8d266886d31f6eb0d7333c815769305.jpg"
-        ></image>
-        <image
-          mode="widthFix"
-          src="https://yanxuan-item.nosdn.127.net/a9bee1cb53d72e6cdcda210071cbd46a.jpg"
+          v-for="(img, index) in goodsDetail.details.pictures"
+          :key="index"
+          :src="img"
         ></image>
       </view>
     </view>
