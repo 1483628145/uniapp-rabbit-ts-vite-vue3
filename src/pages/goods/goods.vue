@@ -1,4 +1,3 @@
-// src/pages/goods/goods.vue
 <script setup lang="ts">
 import { ref } from 'vue'
 import { getGoodsList } from '@/api/goods/goods'
@@ -33,6 +32,14 @@ const onSwiperChange = (e: any) => {
   currentIndex.value = e.detail.current
 }
 
+const onTapImage = (url: string) => {
+  // 大图预览
+  uni.previewImage({
+    current: url,
+    urls: goodsDetail.value!.mainPictures,
+  })
+}
+
 /*
 弹出层交互
 */
@@ -61,7 +68,9 @@ onLoad(async () => {
 </script>
 
 <template>
+  <!-- 骨架屏 -->
   <Pageskeleton v-if="loading"></Pageskeleton>
+  <!-- 商品详情 -->
   <scroll-view v-else scroll-y class="viewport">
     <!-- 基本信息 -->
     <view class="goods">
@@ -70,7 +79,7 @@ onLoad(async () => {
         <!-- 当轮播图改变时将索引拿到 -->
         <swiper circular @change="onSwiperChange">
           <swiper-item v-for="(mainPic, index) in goodsDetail.mainPictures" :key="index">
-            <image mode="aspectFill" :src="mainPic" />
+            <image mode="aspectFill" :src="mainPic" @tap="onTapImage(mainPic)" />
           </swiper-item>
         </swiper>
         <view class="indicator">
