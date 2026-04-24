@@ -6,6 +6,7 @@ import { onLoad } from '@dcloudio/uni-app'
 import type { GoodsResult } from '@/api/goods/types'
 import AddressPanel from './components/AddressPanel.vue'
 import ServicePanel from './components/ServicePanel.vue'
+import Pageskeleton from './components/Pageskeleton.vue'
 
 // 商品详情数据
 // 获取屏幕边界到安全区域距离
@@ -46,14 +47,22 @@ const openpopup = (name: string) => {
   popup.value.open()
 }
 
+/*
+骨架屏
+*/
+const loading = ref(true)
+
 // 监听页面加载
-onLoad(() => {
-  getGoodsData()
+onLoad(async () => {
+  loading.value = true
+  await getGoodsData()
+  loading.value = false
 })
 </script>
 
 <template>
-  <scroll-view scroll-y class="viewport">
+  <Pageskeleton v-if="loading"></Pageskeleton>
+  <scroll-view v-else scroll-y class="viewport">
     <!-- 基本信息 -->
     <view class="goods">
       <!-- 商品主图 -->
@@ -96,12 +105,6 @@ onLoad(() => {
           <text class="text ellipsis"> 无忧退 快速退款 免费包邮 </text>
         </view>
       </view>
-
-      <!-- 弹出层 -->
-      <uni-popup ref="popup" type="bottom" background-color="#fff">
-        <AddressPanel v-if="popupName === 'address'" @close="popup.close()" />
-        <ServicePanel v-if="popupName === 'service'" @close="popup.close()" />
-      </uni-popup>
     </view>
 
     <!-- 商品详情 -->
@@ -154,7 +157,6 @@ onLoad(() => {
       </view>
     </view>
   </scroll-view>
-
   <!-- 用户操作 -->
   <view class="toolbar" :style="{ paddingBottom: safeAreaInsets?.bottom + 'px' }">
     <view class="icons">
@@ -171,6 +173,12 @@ onLoad(() => {
       <view class="buynow"> 立即购买 </view>
     </view>
   </view>
+
+  <!-- 弹出层 -->
+  <uni-popup ref="popup" type="bottom" background-color="#fff">
+    <AddressPanel v-if="popupName === 'address'" @close="popup.close()" />
+    <ServicePanel v-if="popupName === 'service'" @close="popup.close()" />
+  </uni-popup>
 </template>
 
 <style lang="scss">
