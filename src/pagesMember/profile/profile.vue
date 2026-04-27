@@ -1,19 +1,105 @@
 <script setup lang="ts">
-// 获取屏幕边界到安全区域距离
-const { safeAreaInsets } = uni.getSystemInfoSync()
+import { ref } from 'vue'
+import { getUserInfo } from '@/api/login/login.ts'
+import { onLoad } from '@dcloudio/uni-app'
+import type { UserInfo } from '@/api/login/types.ts'
+import { reqChangeUserInfo } from '@/api/login/login.ts'
+
+// 用户信息
+const userInfo = ref<UserInfo>({} as UserInfo)
+
+// 获取用户信息
+const getUserInfoDate = async () => {
+  const res = await getUserInfo()
+  userInfo.value = res.result
+}
+
+/*
+修改头像
+*/
+const changeAvatar = () => {
+  // 调用接口拿到本机图像
+  uni.chooseMedia({
+    count: 1,
+    mediaType: ['image'],
+    success: (res) => {
+      // 成功回调
+      uni.uploadFile({
+        url: '/member/profile/avatar',
+        name: 'file',
+        filePath: res.tempFiles[0].tempFilePath,
+        success: (res) => {
+          console.log(res.data)
+        },
+        fail: (err) => {
+          console.log('上传失败', err)
+        },
+      })
+    },
+  })
+}
+
+/*
+修改个人资料
+*/
+
+const profile = ref({
+  nickname: '',
+  gender: '',
+  birthday: '',
+  city: '',
+  profession: '',
+  fullLocation: '',
+})
+
+// 修改生日
+const changeBirthday = (e: any) => {
+  profile.value.birthday = e.detail.value
+}
+//修改性别
+const onGenderChange: UniHelper.RadioGroupOnChange = (ev) => {
+  profile.value.gender = ev.detail.value
+}
+// 修改城市
+let fullLocationCode: [string, string, string] = ['', '', '']
+const changeCity = (e: any) => {
+  // 修改前端界面
+  profile.value.fullLocation = e.detail.value.join(' ')
+  // 提交后端更新
+  fullLocationCode = e.detail.code!
+}
+
+// 提交数据
+const submit = async () => {
+  const { nickname, gender, birthday, profession } = profile.value
+  const res = await reqChangeUserInfo({
+    nickname,
+    gender,
+    birthday,
+    profession,
+    provinceCode: fullLocationCode[0],
+    cityCode: fullLocationCode[1],
+    countyCode: fullLocationCode[2],
+  })
+  
+}
+
+onLoad(() => {
+  getUserInfoDate()
+})
 </script>
 
 <template>
   <view class="viewport">
     <!-- 导航栏 -->
-    <view class="navbar" :style="{ paddingTop: safeAreaInsets?.top + 'px' }">
+    <view class="navbar">
       <navigator open-type="navigateBack" class="back icon-left" hover-class="none"></navigator>
       <view class="title">个人信息</view>
     </view>
     <!-- 头像 -->
     <view class="avatar">
-      <view class="avatar-content">
-        <image class="image" src=" " mode="aspectFill" />
+      <view class="avatar-content" @tap="changeAvatar">
+        <image class="image" :src="userInfo.avatar" mode="aspectFill" />
         <text class="text">点击修改头像</text>
       </view>
     </view>
@@ -23,21 +109,21 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
       <view class="form-content">
         <view class="form-item">
           <text class="label">账号</text>
-          <text class="account">账号名</text>
+          <text class="account">{{ userInfo.nickname }}</text>
         </view>
         <view class="form-item">
           <text class="label">昵称</text>
-          <input class="input" type="text" placeholder="请填写昵称" value="" />
+          <input class="input" type="text" placeholder="请填写昵称" v-model="profile.nickname" />
         </view>
         <view class="form-item">
           <text class="label">性别</text>
-          <radio-group>
+          <radio-group @change="onGenderChange">
             <label class="radio">
-              <radio value="男" color="#27ba9b" :checked="true" />
+              <radio value="男" color="#27ba9b" :checked="profile.gender === '男'" />
               男
             </label>
             <label class="radio">
-              <radio value="女" color="#27ba9b" :checked="false" />
+              <radio value="女" color="#27ba9b" :checked="profile.gender === '女'" />
               女
             </label>
           </radio-group>
@@ -49,26 +135,32 @@ const { safeAreaInsets } = uni.getSystemInfoSync()
             mode="date"
             start="1900-01-01"
             :end="new Date()"
-            value="2000-01-01"
+            :value="profile.birthday"
+            @change="changeBirthday"
           >
-            <view v-if="false">2000-01-01</view>
+            <view v-if="profile.birthday">{{ profile.birthday }}</view>
             <view class="placeholder" v-else>请选择日期</view>
           </picker>
         </view>
         <view class="form-item">
           <text class="label">城市</text>
-          <picker class="picker" mode="region" :value="['广东省', '广州市', '天河区']">
-            <view v-if="false">广东省广州市天河区</view>
+          <picker
+            class="picker"
+            mode="region"
+            :value="profile.fullLocation?.split(' ')"
+            @change="changeCity"
+          >
+            <view v-if="profile.fullLocation">{{ profile.fullLocation }}</view>
             <view class="placeholder" v-else>请选择城市</view>
           </picker>
         </view>
         <view class="form-item">
           <text class="label">职业</text>
-          <input class="input" type="text" placeholder="请填写职业" value="" />
+          <input class="input" type="text" placeholder="请填写职业" v-model="profile.profession" />
         </view>
       </view>
       <!-- 提交按钮 -->
-      <button class="form-button">保 存</button>
+      <button class="form-button" @tap="submit">保存</button>
     </view>
   </view>
 </template>

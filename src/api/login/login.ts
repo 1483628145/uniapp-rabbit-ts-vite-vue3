@@ -25,3 +25,15 @@ export const getUserInfo = () => {
     method: 'GET',
   })
 }
+
+/**
+ * 修改用户资料
+ * @param data 修改参数：nickname, gender, birthday, city, profession, fullLocation
+ */
+export const reqChangeUserInfo = (data: any) => {
+  return http({
+    url: '/member/profile',
+    method: 'PUT',
+    data,
+  })
+}
