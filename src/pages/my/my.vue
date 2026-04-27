@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import type { UserInfo } from '@/api/login/types'
 import type { XtxGuessInstance } from '@/types/component'
+import { useMemberStore } from '@/stores/modules/member'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 
@@ -34,6 +35,9 @@ const handleScrollToLower = () => {
   guessRef.value?.reqGuessList()
 }
 
+// 判断是否登陆
+const isLogin = ref(uni.getStorageSync('token'))
+
 onLoad(() => {
   getUserIofoReq()
 })
@@ -44,7 +48,7 @@ onLoad(() => {
     <!-- 个人资料 -->
     <view class="profile" :style="{ paddingTop: safeAreaInsets!.top + 'px' }">
       <!-- 情况1：已登录 -->
-      <view class="overview" v-if="true">
+      <view class="overview" v-if="isLogin">
         <navigator url="/pagesMember/profile/profile" hover-class="none">
           <image class="avatar" mode="aspectFill" :src="userInfo.avatar"></image>
         </navigator>

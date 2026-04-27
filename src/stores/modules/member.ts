@@ -26,8 +26,11 @@ export const useMemberStore = defineStore(
       })
     }
 
-    // 清除登陆
-    const clearProfile = () => {}
+    // 清除登陆 清除本地token 和 profile 中的用户信息
+    const clearProfile = () => {
+      profile.value = {} as LoginResponse
+      uni.removeStorageSync('token')
+    }
 
     // 记得 return
     return { profile, login, clearProfile }

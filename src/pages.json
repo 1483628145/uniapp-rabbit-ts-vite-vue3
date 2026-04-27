@@ -93,5 +93,26 @@
 			"^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
 			"^Xtx(.*)": "@/components/Xtx$1.vue"
 		}
-	}
+	},
+	// 分包加载规则
+	"subPackages": [
+		{
+			"root": "pagesMember",
+			// 分包路径和窗口配置
+			"pages": [
+				{
+					"path": "settings/settings",
+					"style": {
+						"navigationBarTitleText": "设置"
+					}
+				},
+				{
+					"path": "profile/profile",
+					"style": {
+						"navigationBarTitleText": "个人信息"
+					}
+				}
+			]
+		}
+	]
 }
