@@ -81,7 +81,6 @@ const submit = async () => {
     cityCode: fullLocationCode[1],
     countyCode: fullLocationCode[2],
   })
-  
 }
 
 onLoad(() => {
