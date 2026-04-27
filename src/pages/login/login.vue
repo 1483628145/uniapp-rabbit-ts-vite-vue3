@@ -1,8 +1,5 @@
 <script setup lang="ts">
 // 登陆请求参数
-import type { LoginParams } from '@/api/login/types'
-import { reqLogin } from '@/api/login/login'
-import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import { useMemberStore } from '@/stores/modules/member'
 

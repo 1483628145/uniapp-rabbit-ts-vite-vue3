@@ -1,8 +1,12 @@
-// src/pages/my/my.vue
-
 <script setup lang="ts">
+import { getUserInfo } from '@/api/login/login'
+import { ref } from 'vue'
+import { onLoad } from '@dcloudio/uni-app'
+import type { UserInfo } from '@/api/login/types'
+import type { XtxGuessInstance } from '@/types/component'
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
+
 // 订单选项
 const orderTypes = [
   { type: 1, text: '待付款', icon: 'icon-currency' },
@@ -10,23 +14,42 @@ const orderTypes = [
   { type: 3, text: '待收货', icon: 'icon-check' },
   { type: 4, text: '待评价', icon: 'icon-comment' },
 ]
+
+// 用户信息
+const userInfo = ref<UserInfo>({} as UserInfo)
+
+// 获取用户信息
+const getUserIofoReq = async () => {
+  const res = await getUserInfo()
+  userInfo.value = res.result
+}
+
+// 猜你喜欢组件实例
+const guessRef = ref<XtxGuessInstance>()
+
+// 触底加载更多数据
+const handleScrollToLower = () => {
+  console.log('@@')
+  // 触发子组件获取更多猜你喜欢数据
+  guessRef.value?.reqGuessList()
+}
+
+onLoad(() => {
+  getUserIofoReq()
+})
 </script>
 
 <template>
-  <scroll-view class="viewport" scroll-y enable-back-to-top>
+  <scroll-view class="viewport" scroll-y enable-back-to-top @scrolltolower="handleScrollToLower">
     <!-- 个人资料 -->
     <view class="profile" :style="{ paddingTop: safeAreaInsets!.top + 'px' }">
       <!-- 情况1：已登录 -->
-      <view class="overview" v-if="false">
+      <view class="overview" v-if="true">
         <navigator url="/pagesMember/profile/profile" hover-class="none">
-          <image
-            class="avatar"
-            mode="aspectFill"
-            src="https://pcapi-xiaotuxian-front-devtest.itheima.net/miniapp/uploads/avatar_3.jpg"
-          ></image>
+          <image class="avatar" mode="aspectFill" :src="userInfo.avatar"></image>
         </navigator>
         <view class="meta">
-          <view class="nickname"> 黑马程序员 </view>
+          <view class="nickname"> {{ userInfo.nickname }} </view>
           <navigator class="extra" url="/pagesMember/profile/profile" hover-class="none">
             <text class="update">更新头像昵称</text>
           </navigator>
@@ -80,7 +103,7 @@ const orderTypes = [
     </view>
     <!-- 猜你喜欢 -->
     <view class="guess">
-      <XtxGuess ref="guessRef" />
+      <XtxGuess ref="guessRef"></XtxGuess>
     </view>
   </scroll-view>
 </template>

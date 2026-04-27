@@ -20,7 +20,7 @@ const httpInterceptor = {
     }
     // 4. 添加 token 请求头标识
     const memberStore = useMemberStore()
-    const token = memberStore.profile?.token
+    const token = uni.getStorageSync('token')
     if (token) {
       options.header.Authorization = token
     }

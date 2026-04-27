@@ -5,3 +5,25 @@
 export interface LoginParams {
   phoneNumber: string
 }
+
+// 登陆响应参数
+export interface LoginResponse {
+  id: number
+  mobile: string
+  token: string
+  nickname: string
+  avatar: string
+  account: string
+}
+
+// 用户信息
+export interface UserInfo {
+  id: number
+  avatar: string
+  nickname: string
+  account: string
+  gender: string
+  birthday: string
+  fullLocation: string
+  profession: string
+}
