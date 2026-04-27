@@ -49,7 +49,7 @@ const login = async () => {
           </button>
         </view>
       </view>
-      <view class="tips">登录/注册即视为你同意《服务条款》和《小兔鲜儿隐私协议》</view>
+      <view class="tips">登录/注册即视为你同意《服务条款</view>
     </view>
   </view>
 </template>
