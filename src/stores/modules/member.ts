@@ -1,33 +1,21 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
+import { reqLogin } from '@/api/login/login'
 // 定义 Store
 export const useMemberStore = defineStore(
   'member',
   () => {
-    // 会员信息 token
-    const profile = ref<any>(uni.getStorageSync('memberProfile'))
+    // 获取用户信息
+    const userInfo = ref({})
 
-    // 保存会员信息，登录时使用
-    const setProfile = (val: any) => {
-      profile.value = val
-      // 配置数据持久化
-      uni.setStorageSync('memberProfile', val)
-    }
-
-    // 清理会员信息，退出时使用
-    const clearProfile = () => {
-      profile.value = undefined
-      // 清除数据持久化
-      uni.removeStorageSync('memberProfile')
+    // 登陆获取
+    const login = async (phoneNumber: string) => {
+      const res = await reqLogin({ phoneNumber })
+      userInfo.value = res.result!
     }
 
     // 记得 return
-    return {
-      profile,
-      setProfile,
-      clearProfile,
-    }
+    return { userInfo, login }
   },
   // TODO: 持久化
   {

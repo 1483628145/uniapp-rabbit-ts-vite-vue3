@@ -1,7 +1,26 @@
-// src/pages/login/login.vue
-
 <script setup lang="ts">
-//
+// 登陆请求参数
+import type { LoginParams } from '@/api/login/types'
+import { reqLogin } from '@/api/login/login'
+import { onLoad } from '@dcloudio/uni-app'
+import { ref } from 'vue'
+import { useMemberStore } from '@/stores/modules/member'
+
+// 登陆code
+// const logincode = ref('')
+
+// 登陆手机号码
+const loginphone = ref('13578788989')
+
+// store
+const memberStore = useMemberStore()
+
+// 模拟登陆按钮
+const login = async () => {
+  // 调用store 获取用户信息
+  await memberStore.login(loginphone.value)
+  // console.log(res)
+}
 </script>
 
 <template>
@@ -18,7 +37,7 @@
       <!-- <button class="button phone">登录</button> -->
 
       <!-- 小程序端授权登录 -->
-      <button class="button phone">
+      <button class="button phone" open-type="getPhoneNumber">
         <text class="icon icon-phone"></text>
         手机号快捷登录
       </button>
@@ -28,7 +47,7 @@
         </view>
         <view class="options">
           <!-- 通用模拟登录 -->
-          <button>
+          <button @tap="login">
             <text class="icon icon-phone">模拟快捷登录</text>
           </button>
         </view>

@@ -32,6 +32,9 @@ const onSwiperChange = (e: any) => {
   currentIndex.value = e.detail.current
 }
 
+/*
+图片预览
+*/
 const onTapImage = (url: string) => {
   // 大图预览
   uni.previewImage({
