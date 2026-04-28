@@ -116,6 +116,12 @@
 					"style": {
 						"navigationBarTitleText": "收货地址"
 					}
+				},
+				{
+					"path": "address-form/address-form",
+					"style": {
+						"navigationBarTitleText": "地址表单"
+					}
 				}
 			]
 		}

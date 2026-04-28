@@ -243,7 +243,6 @@ npm run lint              # ESLint 修复
 
 ## 学习资料
 
-- 视频课程：https://www.bilibili.com/video/BV1Bp4y1379L/
 - 接口文档：https://www.apifox.cn/apidoc/shared-0e6ee326-d646-41bd-9214-29dbf47648fa/
 - 在线笔记：https://megasu.atomgit.net/uni-app-shop-note/
 - 参考源码：https://gitcode.com/Megasu/uniapp-shop-vue3-ts/

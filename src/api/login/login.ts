@@ -2,6 +2,7 @@ import { http } from '@/utils/http'
 import type { LoginParams } from './types'
 import type { LoginResponse } from './types'
 import type { UserInfo } from './types'
+import type { AddUserAddressParams } from './types'
 
 /**
  * 小程序登陆
@@ -35,5 +36,41 @@ export const reqChangeUserInfo = (data: any) => {
     url: '/member/profile',
     method: 'PUT',
     data,
+  })
+}
+
+/**
+ * 获取用户收货列表
+ * @param data
+ *
+ */
+export const reqGetUserAddressList = () => {
+  return http({
+    url: '/member/address',
+    method: 'GET',
+  })
+}
+
+/**
+ * 添加用户收货地址
+ * @param data
+ *
+ */
+export const reqAddUserAddress = (data: AddUserAddressParams) => {
+  return http({
+    url: '/member/address',
+    method: 'POST',
+    data,
+  })
+}
+
+/**
+ * 获取用户收货地址详情
+ * @param id
+ */
+export const reqGetUserAddressDetail = (id: string) => {
+  return http({
+    url: `/member/address/${id}`,
+    method: 'GET',
   })
 }
