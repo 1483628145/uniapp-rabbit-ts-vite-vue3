@@ -74,3 +74,14 @@ export const reqGetUserAddressDetail = (id: string) => {
     method: 'GET',
   })
 }
+
+/**
+ * 删除用户收货地址
+ * @param id
+ */
+export const reqDeleteUserAddress = (id: string) => {
+  return http({
+    url: `/member/address/${id}`,
+    method: 'DELETE',
+  })
+}
